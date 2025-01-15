@@ -138,21 +138,31 @@
             <p>Un'esplosione di freschezza e raffinatezza pensata per il tuo bucato. Lasciati conquistare dalle sue note uniche, perfette per ogni giorno.</p>
         </div>
 
-       <div class="catalog-section">
+      <div class="catalog-section">
     <h3>Catalogo Prodotti</h3>
-    <ul>
-        <li><strong>Profumo Ambiente 200ml:</strong> 20€</li>
-        <li><strong>Profumo Ambiente 500ml:</strong> 35€</li>
-        <li><strong>Profumo Bucato 500ml:</strong> 18€</li>
+    <ul id="product-list">
+        <li>
+            <strong>Profumo Ambiente 200ml</strong>: 20€
+            <button onclick="addToCart('Profumo Ambiente 200ml', 20)">Aggiungi al carrello</button>
+        </li>
+        <li>
+            <strong>Profumo Ambiente 500ml</strong>: 35€
+            <button onclick="addToCart('Profumo Ambiente 500ml', 35)">Aggiungi al carrello</button>
+        </li>
+        <li>
+            <strong>Profumo Bucato 500ml</strong>: 18€
+            <button onclick="addToCart('Profumo Bucato 500ml', 18)">Aggiungi al carrello</button>
+        </li>
     </ul>
-    <p>
-        📂 <a href="https://raw.githubusercontent.com/Anto161062/landing-page-03-fiori/main/catalogo2025.pdf" 
-              target="_blank" 
-              style="color: #a5845b; text-decoration: none; font-weight: bold;">
-              Scarica il catalogo completo in PDF
-        </a>
-    </p>
 </div>
+
+<div class="cart-section">
+    <h3>Il tuo carrello</h3>
+    <ul id="cart-list"></ul>
+    <p id="total-price">Totale: 0€</p>
+    <button onclick="submitOrder()">Invia Ordine</button>
+</div>
+
 
 
         <div class="cta">
@@ -166,8 +176,45 @@
                 <input type="email" name="email" placeholder="La tua email" required>
                 <textarea name="message" rows="5" placeholder="La tua domanda" required></textarea>
                 <button type="submit">Invia</button>
-            </form>
-        </div>
+                  </form>
     </div>
+</div>
+
+<script>
+    let cart = [];
+    let total = 0;
+
+    function addToCart(product, price) {
+        cart.push({ product, price });
+        total += price;
+        updateCart();
+    }
+
+    function updateCart() {
+        const cartList = document.getElementById('cart-list');
+        const totalPrice = document.getElementById('total-price');
+        cartList.innerHTML = '';
+        cart.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.product}: ${item.price}€`;
+            cartList.appendChild(li);
+        });
+        totalPrice.textContent = `Totale: ${total}€`;
+    }
+
+    function submitOrder() {
+        if (cart.length === 0) {
+            alert('Il carrello è vuoto!');
+            return;
+        }
+
+        const orderDetails = cart.map(item => `${item.product}: ${item.price}€`).join('\n');
+        alert(`Ordine inviato:\n${orderDetails}\nTotale: ${total}€`);
+        // Aggiungi qui il codice per inviare l'ordine tramite form o email
+    }
+</script>
+</body>
+</html>
+
 </body>
 </html>
